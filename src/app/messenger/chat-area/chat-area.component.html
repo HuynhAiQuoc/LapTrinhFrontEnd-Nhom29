@@ -5,33 +5,76 @@
       <div class="wrap">
         <img id="profile-img" src="https://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
         <p>{{username}}</p>
-        <p style="color:rgb(170, 253, 170); font-size: 18px">Online</p>
+        <p style="color:rgb(170, 253, 170); font-size: 15px">Online</p>
       </div>
     </div>
-    <div id="addContact">
-      <form>
-        <input placeholder="add a new contact" />
-        <button>Add</button>
-      </form>
+
+    <div id="slideMenu">
+      <button id="peopleChat" class="backgroundActive" (click)="selectPeopleChat()"><i class="fa fa-user"></i> People</button>
+      <button id="groupChat" class="backgroundNoActive"  (click)="selectGroupChat()"><i class="fa fa-users"></i> Group</button>
     </div>
 
+    <div id="peopleList">
+      <div id="addContact">
+        <form #addUser="ngForm" (ngSubmit)="addPeopleContact(addUser)">
+          <input placeholder="add a new contact" name="username" ngModel />
+          <button>Add</button>
+        </form>
+      </div>
 
-    <div id="contacts">
+      <div id="contacts">
+        <ul>
+          <li class="contact" *ngFor="let u of listUser" (click)="selectUser(u)">
+            <img src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-File.png" />
+            <p class="name">{{u}}</p>
+          </li>
+        </ul>
+      </div>
 
-      <ul>
-        <li class="contact" *ngFor="let u of listUser" (click)="selectUser(u)">
-          <p class="name">{{u}}</p>
-        </li>
-      </ul>
+    </div>
+
+    <div id="groupList" style="display: none">
+      <div id="groupFunction">
+        <div class="createGroup">
+          <p>Create group</p>
+          <form>
+            <input placeholder="Add a new group" />
+            <button type="submit">Create</button>
+          </form>
+        </div>
+
+        <div class="joinGroup">
+          <p>Join group</p>
+          <form>
+            <input placeholder="Enter a group" />
+            <button type="submit">Join</button>
+          </form>
+        </div>
+
+      </div>
+
+      <div id="contacts">
+        <ul>
+          <li class="contact">
+            <img
+              src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-File.png" />
+            <p class="name">Nguyen Du Khanh</p>
+          </li>
+          <li class="contact">
+            <img
+              src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-File.png" />
+            <p class="name">Nguyen Du Khanh</p>
+          </li>
+        </ul>
+      </div>
 
     </div>
 
     <div id="bottom-bar">
-      <button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
 
       <button href="login-form-20/index.html" id="settings" (click)="onLogout()"><i class="fa fa-arrow-left"
           aria-hidden="true"></i>
-        <span>Leave</span>
+        <span> Logout</span>
       </button>
     </div>
   </div>
@@ -40,30 +83,31 @@
 
   <div class="content float-styles">
     <div class="contact-profile">
-      <img src="https://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-
-      <p>{{author}}</p>
-
-      <!-- <div class="social-media">
-        <i class="fa fa-facebook" aria-hidden="true"></i>
-        <i class="fa fa-twitter" aria-hidden="true"></i>
-        <i class="fa fa-instagram" aria-hidden="true"></i>
-      </div> -->
+      <img src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-File.png" alt="" />
+      <div>
+        <p class="author">{{author}}</p>
+        <p class="status">{{status}}</p>
+      </div>
     </div>
-    <div class="messages">
 
-      <ul *ngFor="let message of listSendMessage">
-        <li class="sent">
+    <div class="messages" id="messages" #scroll [scrollTop]="scroll.scrollHeight">
+      <ul *ngFor="let message of listMessage">
+
+        <li class="sent" *ngIf="message.type == 'sent'">
           <img src="https://emilcarlsson.se/assets/mikeross.png" alt="" />
-          <p>{{message}}</p>
-        </li>
-      </ul>
+          <p>{{message.author}}</p>
+          <pre>{{message.ms}}</pre>
 
-      <ul *ngFor="let reply of listReplyMessage">
-        <li class="replies">
-          <img src="https://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-          <p>{{reply}}</p>
         </li>
+
+        <li class="replies" *ngIf="message.type == 'reply'">
+          <img src="https://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+          <div>
+            <p>{{message.author}}</p>
+            <pre>{{message.ms}}</pre>
+          </div>
+        </li>
+
       </ul>
 
     </div>
@@ -77,69 +121,5 @@
 
   </div>
 
-  <!--chat detail-->
-
-  <div id="chat-details" class="float-styles">
-    <div id="chat-details-profile">
-      <div class="image-profile">
-        <img src="https://pbs.twimg.com/profile_images/883859744498176000/pjEHfbdn.jpg" alt="" />
-      </div>
-
-      <div>
-        <p>Group FontEnd</p>
-      </div>
-
-    </div>
-
-    <div id="chat-details-list-items">
-      <ul class="list-items-details">
-        <li id="member-items" class="show">
-          <p>Members</p> <i class="fa fa-angle-down"></i>
-        </li>
-        <li id="list-members">
-          <ul id="members" class="hide">
-            <li>
-              <img class="image_user" src="https://emilcarlsson.se/assets/louislitt.png" alt="" />
-              <p class="name_user">Nguyen Du Khanh</p>
-            </li>
-
-            <li>
-              <img class="image_user" src="https://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-              <p class="name_user">Huynh Ai quoc</p>
-            </li>
-
-            <li>
-              <img class="image_user" src="https://emilcarlsson.se/assets/rachelzane.png" alt="" />
-              <p class="name_user"> Trinh Duc Long</p>
-            </li>
-
-          </ul>
-        </li>
-        <li class="add-items">
-          <div class="name_item">
-            <p>Add members</p>
-            <i class="fa fa-plus"></i>
-          </div>
-
-          <div id="input_field" class="hide">
-            <input type="text" placeholder="user name" />
-            <button type="submit">Add</button>
-          </div>
-        </li>
-        <li class="rename-items">
-          <div class="title-item">
-            <p>Rename groups</p>
-            <i class="fa fa-edit"></i>
-          </div>
-
-          <div id="rename-input-field" class="hide">
-            <input type="text" placeholder="name" />
-            <button type="submit">Change</button>
-          </div>
-
-        </li>
-      </ul>
-    </div>
-  </div>
 
 </div>

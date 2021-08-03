@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(signIn: NgForm) {
-
     if (signIn.value.user.trim() == "" || signIn.value.password.trim() == "") {
       this.isFormInvalid = true;
       this.areUserInvalid = false;
@@ -40,7 +39,6 @@ export class LoginComponent implements OnInit {
           this.areUserInvalid = true;
         }
       })
-
     }
   }
 

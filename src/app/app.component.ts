@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WebsocketService} from './websocket.service';
+declare var jQuery: any;
 
 @Component({
   selector: 'app-root',
@@ -10,8 +11,11 @@ export class AppComponent implements OnInit{
   title = 'app';
   constructor(private webSocketService: WebsocketService){
 
+  
   }
   ngOnInit(): void {
     this.webSocketService.openWebSocket();
+
+   
   }
 }
