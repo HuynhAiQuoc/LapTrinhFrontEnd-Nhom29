@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WebsocketService } from 'src/app/websocket.service';
@@ -10,18 +10,22 @@ import * as $ from 'jquery';
   templateUrl: './chat-area.component.html',
   styleUrls: ['./chat-area.component.css']
 })
-export class ChatAreaComponent implements OnInit {
+export class ChatAreaComponent implements OnInit, AfterViewChecked {
+
+  @ViewChild('scrollBottom', {static: false})private myScrollContainer?: ElementRef;
 
   @Input() listUser: string[] = [];
   @Input() author?: string;
   @Input() username?: string;
   @Input() status?: string;
-  @Input() listMessage: Array<{ type: string, ms: string, author: string }> = [];
+  @Input() listMessagePeople: Array<{ type: string, name: string, to: string, mes: string, time: string }> = [];
+  map?: Map<string, any[]> = new Map();
 
   constructor(public webSocketService: WebsocketService, private router: Router, private listUserService: ListUserService) {
     const navigation = this.router.getCurrentNavigation();
     this.username = navigation?.extras.state as unknown as string;
     this.listUserService.createList(this.username);
+
   }
 
   ngOnInit(): void {
@@ -33,25 +37,42 @@ export class ChatAreaComponent implements OnInit {
 
     this.webSocketService.responseServe().forEach(item => {
       if (JSON.parse(item).event === 'SEND_CHAT') {
-        this.listMessage.push({ type: 'reply', ms: JSON.parse(item).data.mes, author: this.author + '' });
+        if (JSON.parse(item).data.name == this.author) {
+          this.listMessagePeople.push({ type: 'reply', name: JSON.parse(item).data.name, to: JSON.parse(item).data.to, mes: JSON.parse(item).data.mes, time: this.getTime() })
+        }
       }
     });
 
+    this.scrollToBottom();
+
   }
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    this.myScrollContainer?.nativeElement.scroll({
+      top: this.myScrollContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }
+
+
 
   selectUser(user: string) {
     this.author = user;
-    this.listMessage = [];
-    this.checkStatusUser(user);
-    this.isUserOnline();
-
+    this.map = new Map();
+    this.listMessagePeople = [];
+    this.isUserOnline(user);
+    this.responseMessagePeople(user);
   }
 
   sendMessage(form: NgForm) {
     if (form.value.message.trim() != "") {
       this.requestMessage(this.author + '', form.value.message.trim());
       let mess = form.value.message.trim();
-      this.listMessage.push({ type: 'sent', ms: mess, author: '' + this.username });
+      this.listMessagePeople.push({ type: 'sent', name: this.username + '', to: this.author + '', mes: mess, time: this.getTime() })
       form.reset();
     } else {
       return;
@@ -99,7 +120,8 @@ export class ChatAreaComponent implements OnInit {
     this.webSocketService.sendMessage(ms);
   }
 
-  isUserOnline() {
+  isUserOnline(user: string) {
+    this.checkStatusUser(user);
     this.webSocketService.responseServe().forEach(item => {
       if (JSON.parse(item).event === 'CHECK_USER') {
         if (JSON.parse(item).data.status == true) {
@@ -112,6 +134,47 @@ export class ChatAreaComponent implements OnInit {
   }
 
 
+  requestGetMessagePeople(nameAuthor: string, page: number) {
+    var ms = {
+      "action": "onchat",
+      "data": {
+        "event": "GET_PEOPLE_CHAT_MES",
+        "data": {
+          "name": nameAuthor,
+          "page": page
+        }
+      }
+    };
+    this.webSocketService.sendMessage(ms);
+  }
+
+
+  responseMessagePeople(nameAuthor: string): Array<any> {
+    let page: number = 1;
+    while (page < 10) {
+      this.requestGetMessagePeople(nameAuthor, page);
+      this.webSocketService.responseServe().forEach(response => {
+        if (JSON.parse(response).event == 'GET_PEOPLE_CHAT_MES') {
+
+          JSON.parse(response).data.forEach((l: any) => {
+            if (!this.map?.has(l.id)) {
+              if (l.name === this.username) {
+                this.map?.set(l.id, [{ type: 'sent', name: l.name, to: l.to, mes: l.mes, time: l.createAt }]);
+                this.listMessagePeople.splice(0, 0, { type: 'sent', name: l.name, to: l.to, mes: l.mes, time: l.createAt })
+              } else {
+                this.map?.set(l.id, [{ type: 'reply', name: l.name, to: l.to, mes: l.mes, time: l.createAt }]);
+                this.listMessagePeople.splice(0, 0, { type: 'reply', name: l.name, to: l.to, mes: l.mes, time: l.createAt })
+              }
+            }
+          })
+
+        }
+      })
+      page++;
+    }
+    return this.listMessagePeople;
+  }
+
   onLogout() {
     this.webSocketService.sendMessage({
       "action": "onchat",
@@ -120,6 +183,12 @@ export class ChatAreaComponent implements OnInit {
       }
     });
     this.router.navigateByUrl("/login");
+  }
+
+  getTime(): string {
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();;
+    return date;
   }
 
 

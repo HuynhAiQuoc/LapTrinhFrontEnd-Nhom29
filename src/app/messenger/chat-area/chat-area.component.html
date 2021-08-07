@@ -10,8 +10,10 @@
     </div>
 
     <div id="slideMenu">
-      <button id="peopleChat" class="backgroundActive" (click)="selectPeopleChat()"><i class="fa fa-user"></i> People</button>
-      <button id="groupChat" class="backgroundNoActive"  (click)="selectGroupChat()"><i class="fa fa-users"></i> Group</button>
+      <button id="peopleChat" class="backgroundActive" (click)="selectPeopleChat()"><i class="fa fa-user"></i>
+        People</button>
+      <button id="groupChat" class="backgroundNoActive" (click)="selectGroupChat()"><i class="fa fa-users"></i>
+        Group</button>
     </div>
 
     <div id="peopleList">
@@ -25,7 +27,7 @@
       <div id="contacts">
         <ul>
           <li class="contact" *ngFor="let u of listUser" (click)="selectUser(u)">
-            <img src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-File.png" />
+            <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
             <p class="name">{{u}}</p>
           </li>
         </ul>
@@ -56,13 +58,11 @@
       <div id="contacts">
         <ul>
           <li class="contact">
-            <img
-              src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-File.png" />
+            <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
             <p class="name">Nguyen Du Khanh</p>
           </li>
           <li class="contact">
-            <img
-              src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-File.png" />
+            <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
             <p class="name">Nguyen Du Khanh</p>
           </li>
         </ul>
@@ -83,28 +83,29 @@
 
   <div class="content float-styles">
     <div class="contact-profile">
-      <img src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-File.png" alt="" />
+      <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" alt="" />
       <div>
         <p class="author">{{author}}</p>
         <p class="status">{{status}}</p>
       </div>
     </div>
 
-    <div class="messages" id="messages" #scroll [scrollTop]="scroll.scrollHeight">
-      <ul *ngFor="let message of listMessage">
+    <div class="messages" id="messages" #scrollBottom>
+      <ul *ngFor="let message of listMessagePeople">
 
         <li class="sent" *ngIf="message.type == 'sent'">
-          <img src="https://emilcarlsson.se/assets/mikeross.png" alt="" />
-          <p>{{message.author}}</p>
-          <pre>{{message.ms}}</pre>
-
+          <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="" />
+          <p class="authorChat">{{message.name}} </p>
+          <pre>{{message.mes}}</pre>
+          <p class="timeChat">{{message.time}}</p>
         </li>
 
         <li class="replies" *ngIf="message.type == 'reply'">
-          <img src="https://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+          <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="" />
           <div>
-            <p>{{message.author}}</p>
-            <pre>{{message.ms}}</pre>
+            <p class="authorChat">{{message.name}}</p>
+            <pre>{{message.mes}}</pre><br/>
+            <p class="timeChat">{{message.time}}</p>
           </div>
         </li>
 

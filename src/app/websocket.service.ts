@@ -39,6 +39,7 @@ export class WebsocketService {
     return new Observable<any>((observer) => {
       this.websocket?.addEventListener('message', (event) =>{
         observer.next(event.data);
+        // observer.complete();
       })
     })
   }

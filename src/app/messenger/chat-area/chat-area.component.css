@@ -506,12 +506,21 @@
 #frame .content .messages ul li.sent{
   margin-bottom: 0;
 }
-#frame .content .messages ul li.sent p{
+#frame .content .messages ul li.sent .authorChat{
   margin-left: 40px;
   color:#7d9ab8;
-  margin-bottom: 1px;
+  margin-bottom: 0;
   font-family: 'Arial', 'Helvetica', sans-serif;
+  font-size: 15px;
+}
 
+#frame .content .messages ul li.sent .timeChat{
+  font-size: 10px;
+  margin-bottom: 0;
+  text-align: right;
+  width: 330px;
+  margin-top: -7px;
+  color:#7d9ab8;
 }
 
 #frame .content .messages ul li.sent pre {
@@ -534,7 +543,7 @@
   float: right;
 }
 
-#frame .content .messages ul li.replies div p{
+#frame .content .messages ul li.replies div .authorChat{
   padding-right: 10px;
   margin-bottom: 1px;
   text-align: right;
@@ -548,13 +557,20 @@
   overflow: hidden;
   font-family: 'Arial', 'Helvetica', sans-serif;
   margin-bottom: 0;
-
+  float: right;
 }
+
+#frame .content .messages ul li.replies div .timeChat{
+  width: 300px;
+  font-size: 10px;
+  color:#7d9ab8;
+  margin-bottom: 0;
+} 
 
 #frame .content .messages ul li img {
   width: 22px;
   border-radius: 50%;
-  float: left;
+  /* float: left; */
 }
 
 
@@ -563,7 +579,6 @@
   padding: 5px 15px;
   border-radius: 10px;
   max-width: 205px;
-  /* line-height: 100%; */
   line-height: 22px;
 }
 
