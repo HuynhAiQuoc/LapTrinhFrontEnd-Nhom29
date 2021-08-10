@@ -39,16 +39,16 @@
       <div id="groupFunction">
         <div class="createGroup">
           <p>Create group</p>
-          <form>
-            <input placeholder="Add a new group" />
+          <form #createGroupForm="ngForm" (ngSubmit)="createGroup(createGroupForm)">
+            <input placeholder="Add a new group" name="nameGroup" ngModel />
             <button type="submit">Create</button>
           </form>
         </div>
 
         <div class="joinGroup">
           <p>Join group</p>
-          <form>
-            <input placeholder="Enter a group" />
+          <form #joinGroupForm="ngForm" (ngSubmit)="joinGroup(joinGroupForm)">
+            <input placeholder="Enter a group" name="nameGroup" ngModel />
             <button type="submit">Join</button>
           </form>
         </div>
@@ -57,17 +57,12 @@
 
       <div id="contacts">
         <ul>
-          <li class="contact">
+          <li class="contact" *ngFor="let group of listGroup" (click)="selectGroup(group)">
             <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
-            <p class="name">Nguyen Du Khanh</p>
-          </li>
-          <li class="contact">
-            <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
-            <p class="name">Nguyen Du Khanh</p>
+            <p class="name">{{group}}</p>
           </li>
         </ul>
       </div>
-
     </div>
 
     <div id="bottom-bar">
@@ -91,12 +86,13 @@
     </div>
 
     <div class="messages" id="messages" #scrollBottom>
-      <ul *ngFor="let message of listMessagePeople">
+      <ul *ngFor="let message of listMessage">
 
         <li class="sent" *ngIf="message.type == 'sent'">
           <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="" />
           <p class="authorChat">{{message.name}} </p>
           <pre>{{message.mes}}</pre>
+          <!-- <pre>&#128512;</pre> -->
           <p class="timeChat">{{message.time}}</p>
         </li>
 
@@ -104,7 +100,7 @@
           <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="" />
           <div>
             <p class="authorChat">{{message.name}}</p>
-            <pre>{{message.mes}}</pre><br/>
+            <pre class="messageChat">{{message.mes}}</pre><br />
             <p class="timeChat">{{message.time}}</p>
           </div>
         </li>
