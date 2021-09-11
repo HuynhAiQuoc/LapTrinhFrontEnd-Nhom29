@@ -1,0 +1,122 @@
+<!--list user personal-->
+<div id="frame">
+  <div id="sidepanel" class="float-styles">
+    <div id="profile">
+      <div class="wrap">
+        <img id="profile-img" src="https://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+        <p>{{username}}</p>
+        <p style="color:rgb(170, 253, 170); font-size: 15px">Online</p>
+      </div>
+    </div>
+
+    <div id="slideMenu">
+      <button id="peopleChat" class="backgroundActive" (click)="selectPeopleChat()"><i class="fa fa-user"></i>
+        People</button>
+      <button id="groupChat" class="backgroundNoActive" (click)="selectGroupChat()"><i class="fa fa-users"></i>
+        Group</button>
+    </div>
+
+    <div id="peopleList">
+      <div id="addContact">
+        <form #addUser="ngForm" (ngSubmit)="addPeopleContact(addUser)">
+          <input placeholder="add a new contact" name="username" ngModel />
+          <button>Add</button>
+        </form>
+      </div>
+
+      <div id="contacts">
+        <ul>
+          <li class="contact" *ngFor="let u of listUser" (click)="selectUser(u)">
+            <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
+            <p class="name">{{u}}</p>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div id="groupList" style="display: none">
+      <div id="groupFunction">
+        <div class="createGroup">
+          <p>Create group</p>
+          <form #createGroupForm="ngForm" (ngSubmit)="createGroup(createGroupForm)">
+            <input placeholder="Add a new group" name="nameGroup" ngModel />
+            <button type="submit">Create</button>
+          </form>
+        </div>
+
+        <div class="joinGroup">
+          <p>Join group</p>
+          <form #joinGroupForm="ngForm" (ngSubmit)="joinGroup(joinGroupForm)">
+            <input placeholder="Enter a group" name="nameGroup" ngModel />
+            <button type="submit">Join</button>
+          </form>
+        </div>
+
+      </div>
+
+      <div id="contacts">
+        <ul>
+          <li class="contact" *ngFor="let group of listGroup" (click)="selectGroup(group)">
+            <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
+            <p class="name">{{group}}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="bottom-bar">
+
+      <button href="login-form-20/index.html" id="settings" (click)="onLogout()"><i class="fa fa-arrow-left"
+          aria-hidden="true"></i>
+        <span> Logout</span>
+      </button>
+    </div>
+  </div>
+
+  <!--chat area-->
+
+  <div class="content float-styles">
+    <div class="contact-profile">
+      <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" alt="" />
+      <div>
+        <p class="author">{{author}}</p>
+        <p class="status">{{status}}</p>
+      </div>
+    </div>
+
+    <div class="messages" id="messages" #scrollBottom>
+      <ul *ngFor="let message of listMessage">
+
+        <li class="sent" *ngIf="message.type == 'sent'">
+          <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="" />
+          <p class="authorChat">{{message.name}} </p>
+          <pre>{{message.mes}}</pre>
+          <!-- <pre>&#128512;</pre> -->
+          <p class="timeChat">{{message.time}}</p>
+        </li>
+
+        <li class="replies" *ngIf="message.type == 'reply'">
+          <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="" />
+          <div>
+            <p class="authorChat">{{message.name}}</p>
+            <pre class="messageChat">{{message.mes}}</pre><br />
+            <p class="timeChat">{{message.time}}</p>
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="message-input">
+      <form class="wrap" #formMessage="ngForm" (ngSubmit)="sendMessage(formMessage)">
+        <input id="messageInput" name="message" type="text" placeholder="Write your message..." ngModel />
+        <button type="submit" class="submit"><i class="fa fa-paper-plane fa-2x" aria-hidden="true"></i></button>
+      </form>
+    </div>
+
+  </div>
+
+
+</div>

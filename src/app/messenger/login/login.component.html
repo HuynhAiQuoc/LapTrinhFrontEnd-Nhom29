@@ -1,0 +1,33 @@
+<div class="half">
+  <div class="container">
+    <div class="form-block">
+      <div class="text-center mb-5">
+        <h3 style="color: #28a745;">Login</h3>
+      </div>
+      <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
+        <div class="form-group first">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" placeholder="User name" id="username" name="user" ngModel>
+        </div>
+
+        <div class="form-group last mb-3">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" placeholder="Your Password" id="password" name="password" ngModel>
+
+        </div>
+        <button type="submit" class="btn btn-block btn-primary" id="submitLogin">Submit</button>
+
+
+        <div class="alert alert-danger" role="alert" *ngIf="isFormInvalid">Please fill all fields</div>
+
+        <div class="alert alert-danger" role="alert" *ngIf="areUserInvalid">Invalid username or password</div>
+
+      </form>
+      <div class="toRegister">
+        <a routerLink="/register">Register</a>
+
+      </div>
+    </div>
+  </div>
+
+</div>

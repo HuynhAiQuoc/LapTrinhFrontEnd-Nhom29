@@ -1,0 +1,37 @@
+<div class="half">
+  <div class="container-register">
+    <div class="top-title-register">
+      <!--      <image></image>-->
+      <h3 style="color: #28a745;">Register</h3>
+    </div>
+    <div class="form-register">
+
+      <form  #formRegister= "ngForm" (ngSubmit)="onRegister(formRegister)">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" placeholder="User name" id="username" name = "username" ngModel>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" placeholder="Your Password" id="password" name = "password" ngModel>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Re-Password</label>
+          <input type="password" class="form-control" placeholder="Your Password" id="re-password" name = "repassword" ngModel>
+        </div>
+        <input type="submit" value="Register" class="btn btn-block btn-primary" id="submitRegister">
+
+        <div class="alert alert-danger" role="alert"  *ngIf="isFormInvalid">Please fill all fields</div>
+
+        <div class="alert alert-danger" role="alert"  *ngIf="areUserInvalid">Account already exists</div>
+
+        <div class="alert alert-danger" role="alert"  *ngIf="isPasswordInvalid">Password and repassword not same</div>
+
+      </form>
+    </div>
+    <div class="toLogin">
+      <a routerLink="/login">Login</a>
+    </div>
+  </div>
+</div>
