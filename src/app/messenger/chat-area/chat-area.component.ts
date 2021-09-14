@@ -15,9 +15,9 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
 
   @Input() listUser: string[] = [];
   @Input() listGroup: string[] = [];
-  @Input() author?: string;
-  @Input() username?: string;
-  @Input() status?: string;
+  @Input() author?: string='';
+  @Input() username?: string='';
+  @Input() status?: string='';
   @Input() listMessage: Array<any> = [];
   map?: Map<string, any[]> = new Map();
   typeChat?: string = '';
@@ -82,7 +82,7 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
     var ms = {
       "action": "onchat",
       "data": {
-        "event": "GET_USER_LIST",
+        "event": "GET_USER_LIST"
       }
     };
     this.webSocketService.sendMessage(ms);
@@ -105,14 +105,19 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
 
   // submit send message 
   sendMessage(form: NgForm) {
-    if (form.value.message.trim() != "") {
-      this.requestMessage(this.author + '', form.value.message.trim(), this.typeChat + '');
-      let mess = form.value.message.trim();
-      this.listMessage.push({ type: 'sent', name: this.username + '', to: this.author + '', mes: mess, time: this.getTime() })
+    if ((this.author?.trim() !== "")) {
+      if ((form.value.message.trim() != "")) {
+        this.requestMessage(this.author + '', form.value.message.trim(), this.typeChat + '');
+        let mess = form.value.message.trim();
+        this.listMessage.push({ type: 'sent', name: this.username + '', to: this.author + '', mes: mess, time: this.getTime() })
+        form.reset();
+      } else {
+        return;
+      }
+    }else{
       form.reset();
-    } else {
-      return;
     }
+
   }
 
   // request send message to people chat
@@ -216,7 +221,6 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
     this.map = new Map();
     this.listMessage = [];
     this.getMessageGroup(groupName);
-    // console.log(this.listMessage);
   }
 
   //submit creat a group chat and add name group into list group
@@ -228,7 +232,6 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
         if (JSON.parse(item).event === 'CREATE_ROOM') {
           if (JSON.parse(item).status === 'success') {
             this.listGroup.push(groupName);
-            // this.listUserService.addUser(this.username + '', { type: 'group', user: groupName });
             form.reset();
           } else {
             alert('Group Exist');
@@ -247,7 +250,6 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
         if (JSON.parse(item).event === 'JOIN_ROOM') {
           if ((JSON.parse(item).status === 'success') && !(this.listGroup.includes(groupName))) {
             this.listGroup.push(groupName);
-            // this.listUserService.addUser(this.username + '', { type: 'group', user: groupName });
             form.reset();
           } else {
 
@@ -357,7 +359,4 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
     $("#peopleChat").css({ 'background-color': '#32465a' });
     $("#groupChat").css({ 'background-color': 'rgb(67, 95, 122)' });
   }
-
 }
-
-
