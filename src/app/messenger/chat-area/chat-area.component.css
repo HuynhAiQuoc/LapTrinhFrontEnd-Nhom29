@@ -616,3 +616,14 @@
 #frame .content .message-input .wrap button:focus {
   outline: 0;
 }
+
+.emoji-mart {
+  position: fixed ;
+  bottom: 100px;
+  right: 400px;
+}
+
+.toggle-emoji svg {
+  width: 2px;
+  height: 2px;
+}

@@ -103,13 +103,17 @@
             <p class="timeChat">{{message.time}}</p>
           </div>
         </li>
-
+        <emoji-mart class="emoji-mart" (emojiSelect)="addEmoji($event)"  *ngIf="showEmojiPicker" [i18n]="{ search: 'Research', categories: { search: 'No research', recent: 'Researches' } }" title="Pick your emoji…"></emoji-mart>
       </ul>
 
     </div>
 
     <div class="message-input">
       <form class="wrap" #formMessage="ngForm" (ngSubmit)="sendMessage(formMessage)">
+        <input id="messageInput" name="message" type="text" placeholder="Write your message..." autocomplete="off" [(ngModel)]="message" />
+        <button type="button" class="toggle-emoji" (click)="toggleEmojiPicker()">
+          <i-feather name="smile"></i-feather>
+        </button>
         <input id="messageInput" name="message" type="text" placeholder="Write your message..." autocomplete="off" ngModel />
         <button type="submit" class="submit"><i class="fa fa-paper-plane fa-2x" aria-hidden="true"></i></button>
       </form>

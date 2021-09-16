@@ -21,6 +21,7 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
   @Input() listMessage: Array<any> = [];
   map?: Map<string, any[]> = new Map();
   typeChat?: string = '';
+  showEmojiPicker = false;
 
   constructor(public webSocketService: WebsocketService, private router: Router, private listUserService: ListUserService) {
     const navigation = this.router.getCurrentNavigation();
@@ -57,7 +58,7 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
     this.scrollToBottom();
   }
 
-  // auto scroll area chat to bottom 
+  // auto scroll area chat to bottom
   scrollToBottom() {
     this.myScrollContainer?.nativeElement.scroll({
       top: this.myScrollContainer.nativeElement.scrollHeight,
@@ -103,7 +104,7 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  // submit send message 
+  // submit send message
   sendMessage(form: NgForm) {
     if ((this.author?.trim() !== "")) {
       if ((form.value.message.trim() != "")) {
@@ -213,7 +214,7 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
     return this.listMessage;
   }
 
-  // select group chat 
+  // select group chat
   selectGroup(groupName: string) {
     this.author = groupName;
     this.typeChat = 'room';
@@ -359,4 +360,25 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
     $("#peopleChat").css({ 'background-color': '#32465a' });
     $("#groupChat").css({ 'background-color': 'rgb(67, 95, 122)' });
   }
+
+  toggleEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+  addEmoji(event: { emoji: { native: any; }; }) {
+    const { message } = this;
+    const text = `${message}${event.emoji.native}`;
+
+    this.message = text;
+    this.showEmojiPicker = false;
+  }
+
+  _message: string = '';
+  get message(): string {
+    return this._message;
+  }
+
+  set message(value: string) {
+    this._message = value;
+  }
+}
 }
