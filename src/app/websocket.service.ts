@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class WebsocketService {
 
   websocket?: WebSocket;
- 
+
   constructor() {
 
   }
@@ -21,7 +21,7 @@ export class WebsocketService {
     }
 
     this.websocket.onmessage = (event) => {
-    
+
     }
 
     this.websocket.onclose = (event) => {
@@ -35,15 +35,14 @@ export class WebsocketService {
 
   }
 
-  public responseServe(): Observable<any>{
+  public responseServe(): Observable<any> {
     return new Observable<any>((observer) => {
-      this.websocket?.addEventListener('message', (event) =>{
+      this.websocket?.addEventListener('message', (event) => {
         observer.next(event.data);
-        // observer.complete();
       })
     })
   }
- 
+
   public closeWebSocket() {
     this.websocket?.close();
   }

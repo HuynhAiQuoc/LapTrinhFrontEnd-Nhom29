@@ -6,7 +6,9 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {ChatAreaComponent} from "./chat-area/chat-area.component";
 import { FormsModule } from '@angular/forms';
-
+import {FeatherModule} from "angular-feather";
+import {IconsModule} from "../icons/icons.module";
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,9 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     MessengerRoutingModule,
     FormsModule,
+    FeatherModule,
+    IconsModule,
+    PickerModule
   ],
   exports: [
     LoginComponent,

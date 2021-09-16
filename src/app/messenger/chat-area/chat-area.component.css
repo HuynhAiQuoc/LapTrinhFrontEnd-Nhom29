@@ -1,17 +1,17 @@
-
 #frame {
   margin: 0 auto;
   width: 100%;
-  min-width: 360px;
-  max-width: 1000px;
+  min-width: 600px;
+  max-width: 80%;
   height: 92vh;
   min-height: 300px;
   max-height: 720px;
   background: #e6eaea;
   border: 1px solid rgb(0, 162, 255);
+  display: flex;
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 560px) {
   #frame {
     width: 100%;
     height: 100vh;
@@ -33,7 +33,6 @@
 @media screen and (max-width: 735px) {
   #frame #sidepanel {
     width: 58px;
-    min-width: 58px;
   }
 }
 
@@ -77,6 +76,8 @@
   -o-transition: 0.3s height ease;
   -webkit-transition: 0.3s height ease;
   transition: 0.3s height ease;
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 735px) {
@@ -87,6 +88,7 @@
 
 #frame #sidepanel #profile .wrap img {
   width: 50px;
+  /* height: 50px; */
   border-radius: 50%;
   padding: 3px;
   border: 2px solid #e74c3c;
@@ -124,14 +126,13 @@
 
 #frame #sidepanel #profile .wrap p {
   float: left;
+  display: flex;
   margin-left: 15px;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 0;
 }
 
-@media screen and (max-width: 735px) {
-  #frame #sidepanel #profile .wrap p {
-    display: none;
-  }
-}
 
 #frame #sidepanel #profile .wrap i.expand-button {
   float: right;
@@ -163,8 +164,6 @@
 
 #frame #sidepanel #slideMenu {
   margin-top: 25px;
-  /* padding-left: 15px;
-  padding-right: 20px; */
 }
 
 #frame #sidepanel #slideMenu button {
@@ -178,8 +177,8 @@
   border-top: 1.5px solid #2c3e50;
 }
 
-.colorActiveList{
-  background-color:rgba(121, 202, 248, 0.767);
+.colorActiveList {
+  background-color: rgba(121, 202, 248, 0.767);
   border-right: 3px solid #38f888;
 }
 
@@ -260,7 +259,7 @@
   overflow-x: hidden;
 }
 #frame #sidepanel #contacts li:hover {
-  background-color:rgba(121, 202, 248, 0.767);
+  background-color: rgba(121, 202, 248, 0.767);
 }
 
 @media screen and (max-width: 235px) {
@@ -319,7 +318,7 @@
 #frame #sidepanel #peopleList #contacts::-webkit-scrollbar-thumb {
   background-color: rgb(67, 95, 122);
 }
-#frame #sidepanel #contacts ul{
+#frame #sidepanel #contacts ul {
   padding: 0;
 }
 
@@ -341,7 +340,7 @@
   margin-right: 15px;
   color: white;
 }
-#frame #sidepanel #contacts .contact p{
+#frame #sidepanel #contacts .contact p {
   margin-bottom: 0;
 }
 
@@ -367,7 +366,7 @@
   #frame #sidepanel #bottom-bar button {
     float: none;
     width: 100%;
-    padding: 15px 0;
+    /* padding: 15px 0; */
   }
 }
 
@@ -418,15 +417,15 @@
 @media screen and (max-width: 735px) {
   #frame .content {
     width: calc(100% - 58px);
-    min-width: 350px !important;
+    min-width: 345px !important;
   }
 }
 
-@media screen and (min-width: 500px) {
+/* @media screen and (min-width: 500px) {
   #frame .content {
     width: calc(104% - 340px);
   }
-}
+} */
 
 #frame .content .contact-profile {
   width: 100%;
@@ -442,15 +441,15 @@
   margin: 9px 12px 0 9px;
 }
 
-#frame .content .contact-profile div{
+#frame .content .contact-profile div {
   height: 100%;
 }
 
 #frame .content .contact-profile div .author {
-   font-size: 20px;
-   margin-right: 10px;
-   padding-top: 5px;
-   margin-bottom: 2px;
+  font-size: 20px;
+  margin-right: 10px;
+  padding-top: 5px;
+  margin-bottom: 2px;
 }
 #frame .content .contact-profile div .status {
   font-size: 13px;
@@ -479,10 +478,10 @@
 }
 
 #frame .content .messages::-webkit-scrollbar-thumb {
-  background-color: rgb(218,218,218);
+  background-color: rgb(218, 218, 218);
 }
 
-#frame .content .messages ul{
+#frame .content .messages ul {
   padding-left: 0;
   margin-bottom: 0;
 }
@@ -504,34 +503,36 @@
   float: left;
   margin: 6px 8px 0 0;
 }
-#frame .content .messages ul li.sent{
+#frame .content .messages ul li.sent {
   margin-bottom: 0;
 }
-#frame .content .messages ul li.sent .authorChat{
+#frame .content .messages ul li.sent .authorChat {
   margin-left: 40px;
-  color:#7d9ab8;
+  color: #7d9ab8;
   margin-bottom: 0;
-  font-family: 'Arial', 'Helvetica', sans-serif;
+  font-family: "Arial", "Helvetica", sans-serif;
   font-size: 15px;
 }
 
-#frame .content .messages ul li.sent .timeChat{
+#frame .content .messages ul li.sent .timeChat {
   font-size: 10px;
   margin-bottom: 0;
   text-align: right;
   width: 330px;
   margin-top: -7px;
-  color:#7d9ab8;
+  color: #7d9ab8;
 }
 
 #frame .content .messages ul li.sent pre {
   background: #435f7a;
   color: #f5f5f5;
-  font-family: 'Arial', 'Helvetica', sans-serif;
+  font-family: "Arial", "Helvetica", sans-serif;
   margin-bottom: 2px;
+  font-size: 16px;
+  word-break: keep-all;
 }
 
-#frame .content .messages ul li.replies{
+#frame .content .messages ul li.replies {
   margin-bottom: 0;
 }
 
@@ -540,41 +541,41 @@
   margin: 6px 0 0 8px;
 }
 
-#frame .content .messages ul li.replies div{
+#frame .content .messages ul li.replies div {
   float: right;
 }
 
-#frame .content .messages ul li.replies div .authorChat{
+#frame .content .messages ul li.replies div .authorChat {
   padding-right: 10px;
   margin-bottom: 1px;
   text-align: right;
-  color:#7d9ab8;
+  color: #7d9ab8;
   font-size: 15px;
-  font-family: 'Arial', 'Helvetica', sans-serif;
-
+  font-family: "Arial", "Helvetica", sans-serif;
 }
 
 #frame .content .messages ul li.replies div pre {
   background: #8cbbf1;
   overflow: hidden;
-  font-family: 'Arial', 'Helvetica', sans-serif;
+  font-family: "Arial", "Helvetica", sans-serif;
   margin-bottom: 0;
+  font-size: 16px;
   float: right;
+  word-break: keep-all;
 }
 
-#frame .content .messages ul li.replies div .timeChat{
+#frame .content .messages ul li.replies div .timeChat {
   width: 300px;
   font-size: 10px;
-  color:#7d9ab8;
+  color: #7d9ab8;
   margin-bottom: 0;
-} 
+}
 
 #frame .content .messages ul li img {
   width: 22px;
   border-radius: 50%;
   /* float: left; */
 }
-
 
 #frame .content .messages ul li pre {
   display: inline-block;
@@ -593,6 +594,9 @@
 #frame .content .message-input {
   height: 50px;
 }
+#frame .content .message-input .wrap {
+  display: flex;
+}
 
 #frame .content .message-input .wrap input {
   float: left;
@@ -606,7 +610,20 @@
 #frame .content .message-input .wrap button {
   color: rgb(6, 130, 202);
   border: none;
+  float: right;
+  margin-bottom: 10px;
 }
 #frame .content .message-input .wrap button:focus {
   outline: 0;
+}
+
+.emoji-mart {
+  position: fixed ;
+  bottom: 100px;
+  right: 400px;
+}
+
+.toggle-emoji svg {
+  width: 2px;
+  height: 2px;
 }
