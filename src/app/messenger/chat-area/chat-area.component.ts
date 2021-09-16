@@ -381,3 +381,4 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
     this._message = value;
   }
 }
+}
