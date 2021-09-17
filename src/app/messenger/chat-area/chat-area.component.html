@@ -38,7 +38,7 @@
     <div id="groupList" style="display: none">
       <div id="groupFunction">
         <div class="createGroup">
-          <p>Create group</p>
+          <p>Create Group</p>
           <form #createGroupForm="ngForm" (ngSubmit)="createGroup(createGroupForm)">
             <input placeholder="Add a new group" name="nameGroup" autocomplete="off" ngModel />
             <button type="submit">Create</button>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="joinGroup">
-          <p>Join group</p>
+          <p>Join Group</p>
           <form #joinGroupForm="ngForm" (ngSubmit)="joinGroup(joinGroupForm)">
             <input placeholder="Enter a group" name="nameGroup" autocomplete="off" ngModel />
             <button type="submit">Join</button>
@@ -114,7 +114,6 @@
         <button type="button" class="toggle-emoji" (click)="toggleEmojiPicker()">
           <i-feather name="smile"></i-feather>
         </button>
-        <input id="messageInput" name="message" type="text" placeholder="Write your message..." autocomplete="off" ngModel />
         <button type="submit" class="submit"><i class="fa fa-paper-plane fa-2x" aria-hidden="true"></i></button>
       </form>
     </div>
