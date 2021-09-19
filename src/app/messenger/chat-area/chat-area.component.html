@@ -3,7 +3,7 @@
   <div id="sidepanel" class="float-styles">
     <div id="profile">
       <div class="wrap">
-        <img id="profile-img" src="https://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+        <img class="normal" id="profile-img" src="https://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
         <p style="font-size: 18px">{{username}}</p>
         <!-- <p style="color:rgb(170, 253, 170); font-size: 15px">Online</p> -->
       </div>
@@ -27,7 +27,7 @@
       <div id="contacts">
         <ul>
           <li class="contact" *ngFor="let u of listUser" (click)="selectUser(u)">
-            <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
+            <img class="normal" src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
             <p class="name">{{u}}</p>
           </li>
         </ul>
@@ -58,7 +58,7 @@
       <div id="contacts">
         <ul>
           <li class="contact" *ngFor="let group of listGroup" (click)="selectGroup(group)">
-            <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
+            <img class="normal" src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" />
             <p class="name">{{group}}</p>
           </li>
         </ul>
@@ -78,7 +78,7 @@
 
   <div class="content float-styles">
     <div class="contact-profile">
-      <img src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" alt="" />
+      <img class="normal" src="https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-17-512.png" alt="" />
       <div>
         <p class="author">{{author}}</p>
         <p class="status">{{status}}</p>
@@ -89,21 +89,42 @@
       <ul *ngFor="let message of listMessage">
 
         <li class="sent" *ngIf="message.type == 'sent'">
-          <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="" />
+          <img class="normal" src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="" />
           <p class="authorChat">{{message.name}} </p>
           <pre>{{message.mes}}</pre>
           <p class="timeChat">{{message.time}}</p>
+          <img class="normal" *ngIf="message.attachment"
+               class="image-attachment"
+               src="{{ message.attachment.link }}"
+               alt="{{ message.attachment.name }}"
+          />
         </li>
 
         <li class="replies" *ngIf="message.type == 'reply'">
-          <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="" />
+          <img class="normal" rc="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="" />
           <div>
             <p class="authorChat">{{message.name}}</p>
             <pre class="messageChat">{{message.mes}}</pre><br />
             <p class="timeChat">{{message.time}}</p>
+            <img class="normal" *ngIf="message.attachment"
+                 class="image-attachment"
+                 src="{{ message.attachment.link }}"
+                 alt="{{ message.attachment.name }}"
+            />
           </div>
         </li>
         <emoji-mart class="emoji-mart" (emojiSelect)="addEmoji($event)"  *ngIf="showEmojiPicker" [i18n]="{ search: 'Research', categories: { search: 'No research', recent: 'Researches' } }" title="Pick your emoji…"></emoji-mart>
+        <div *ngIf="showGiphySearch" class="giphy-search">
+          <form (ngSubmit)="searchGiphy()">
+            <input type="text" placeholder="Search for a GIF" name="giphy" [(ngModel)]="giphySearchTerm">
+          </form>
+          <ul class="search-results">
+            <li class="gif-result" *ngFor="let result of giphyResults">
+              <img class="imageGiphy" src="{{ result.images.downsized_large.url }}"
+                   (click)="sendGif(result.title, result.images.original.url)">
+            </li>
+          </ul>
+        </div>
       </ul>
 
     </div>
@@ -114,6 +135,8 @@
         <button type="button" class="toggle-emoji" (click)="toggleEmojiPicker()">
           <i-feather name="smile"></i-feather>
         </button>
+        <button type="button" class="toggle-giphy"
+                (click)="toggleGiphySearch()">GIF</button>
         <button type="submit" class="submit"><i class="fa fa-paper-plane fa-2x" aria-hidden="true"></i></button>
       </form>
     </div>

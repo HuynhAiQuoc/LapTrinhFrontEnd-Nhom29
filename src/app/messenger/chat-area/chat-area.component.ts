@@ -3,7 +3,9 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WebsocketService } from 'src/app/websocket.service';
 import { ListUserService } from './listuser.service';
+import Giphy from "giphy-api";
 import * as $ from 'jquery';
+import giphyApi from "giphy-api";
 
 @Component({
   selector: 'app-chat-area',
@@ -21,7 +23,11 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
   @Input() listMessage: Array<any> = [];
   map?: Map<string, any[]> = new Map();
   typeChat?: string = '';
+  currentUser: any;
   showEmojiPicker = false;
+  showGiphySearch = false;
+  giphySearchTerm = '';
+  giphyResults: giphyApi.GIFObject[] = [];
 
   constructor(public webSocketService: WebsocketService, private router: Router, private listUserService: ListUserService) {
     const navigation = this.router.getCurrentNavigation();
@@ -379,6 +385,34 @@ export class ChatAreaComponent implements OnInit, AfterViewChecked {
 
   set message(value: string) {
     this._message = value;
+  }
+
+  searchGiphy() {
+    const giphy = Giphy();
+    const searchTerm = this.giphySearchTerm;
+    giphy.search(searchTerm)
+      .then(res => {
+        console.log(res);
+        this.giphyResults = res.data;
+      })
+      .catch(console.error);
+  }
+
+  sendGif(title: any, url: any) {
+    const { currentUser } = this;
+    currentUser.sendMessage({
+      text: title,
+      roomId: '<your room id>',
+      attachment: {
+        link: url,
+        type: 'image',
+      }
+    }).catch(console.error);
+    this.showGiphySearch = false;
+  }
+
+  toggleGiphySearch() {
+    this.showGiphySearch = !this.showGiphySearch;
   }
 }
 
